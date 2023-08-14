@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Splash View Controller-->
+        <scene sceneID="Tda-Bq-at5">
+            <objects>
+                <viewController storyboardIdentifier="SplashViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5e5-Cw-UPa" customClass="SplashViewController" customModule="IOSChatGPT" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qae-yo-zXX">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logowhite" translatesAutoresizingMaskIntoConstraints="NO" id="CBk-NO-lXL">
+                                <rect key="frame" x="96.666666666666686" y="270" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Xht-FD-VOO"/>
+                                    <constraint firstAttribute="height" constant="200" id="dId-ma-ZFW"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z08-aO-cFy">
+                                <rect key="frame" x="0.0" y="730" width="393" height="40"/>
+                                <fontDescription key="fontDescription" name="DINCondensed-Bold" family="DIN Condensed" pointSize="40"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Dyu-EU-8NU"/>
+                        <color key="backgroundColor" red="0.4039215686" green="0.77647058820000003" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="CBk-NO-lXL" firstAttribute="centerY" secondItem="qae-yo-zXX" secondAttribute="centerY" constant="-56" id="ajS-Ck-1TE"/>
+                            <constraint firstItem="CBk-NO-lXL" firstAttribute="centerX" secondItem="qae-yo-zXX" secondAttribute="centerX" id="dgY-Lk-xbq"/>
+                            <constraint firstItem="Dyu-EU-8NU" firstAttribute="bottom" secondItem="Z08-aO-cFy" secondAttribute="bottom" constant="48" id="gM7-vR-nbg"/>
+                            <constraint firstItem="Dyu-EU-8NU" firstAttribute="trailing" secondItem="Z08-aO-cFy" secondAttribute="trailing" id="uba-9s-WCI"/>
+                            <constraint firstItem="Z08-aO-cFy" firstAttribute="centerX" secondItem="qae-yo-zXX" secondAttribute="centerX" id="xN3-tH-glM"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="logoImageView" destination="CBk-NO-lXL" id="X3h-xz-Dhj"/>
+                        <outlet property="textLabel" destination="Z08-aO-cFy" id="aVW-E3-QZv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uvn-Tg-e7z" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="208" y="0.0"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logowhite" width="3840" height="2160"/>
+    </resources>
+</document>
