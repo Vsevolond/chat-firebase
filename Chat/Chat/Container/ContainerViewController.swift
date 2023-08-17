@@ -22,7 +22,7 @@ protocol ContainerChatProtocol: UIViewController {
 protocol ContainerSidebarProtocol: UIViewController {
     var delegate: SidebarViewControllerDelegate? { get set }
     func reload()
-    func updateChat(at index: Int, section: SidebarSection)
+    func updateChat(at index: Int)
 }
 
 // MARK: - To ContainerModel
@@ -134,7 +134,7 @@ final class ContainerViewController: UIViewController {
                     chatViewController.addNewChatMessage(at: index, type: type)
                 } else {
                     allChats[chat.id].hasUnreadMessages = true
-                    sidebarViewController.updateChat(at: chat.id, section: .allChats)
+                    sidebarViewController.updateChat(at: chat.id)
                 }
             }
         }
@@ -182,24 +182,18 @@ extension ContainerViewController: SidebarViewControllerDelegate {
         toggleSidebar()
     }
     
-    func didSelectChat(at index: Int, section: SidebarSection) {
-        let chat: ChatViewObject
-        switch section {
-        case .allChats:
-            chat = allChats[index]
-        case .savedChats:
-            return
-        }
+    func didSelectChat(at index: Int) {
+        let chat: ChatViewObject = allChats[index]
         
         currentChat = .other(chat: chat)
         loadAllChatMessages(for: chat)
         toggleSidebar()
         
         allChats[index].hasUnreadMessages = false
-        sidebarViewController.updateChat(at: index, section: section)
+        sidebarViewController.updateChat(at: index)
     }
     
-    func deleteChat(at index: Int, section: SidebarSection) {
+    func deleteChat(at index: Int) {
         print(#function)
     }
 }

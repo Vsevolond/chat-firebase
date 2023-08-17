@@ -6,17 +6,17 @@ protocol SidebarViewControllerDelegate: AnyObject {
     func didLoadView()
     func didAddNewChat()
     func didOpenSettings()
-    func didSelectChat(at index: Int, section: SidebarSection)
-    func deleteChat(at index: Int, section: SidebarSection)
+    func didSelectChat(at index: Int)
+    func deleteChat(at index: Int)
 }
 
 // MARK: - To SidebarTableViewController
 protocol SidebarViewControllerProtocol: UIViewController {
     var delegate: SidebarTableViewControllerDelegate? { get set }
     func reloadCells()
-    func addNewCell(at index: Int, in section: SidebarSection)
-    func deleteCell(at index: Int, in section: SidebarSection)
-    func updateCell(at index: Int, in section: SidebarSection)
+    func addNewCell(at index: Int)
+    func deleteCell(at index: Int)
+    func updateCell(at index: Int)
 }
 
 // MARK: - SidebarViewController
@@ -97,12 +97,12 @@ extension SidebarViewController: SidebarTableViewControllerDelegate {
         delegate?.allChats ?? []
     }
     
-    func didSelectChat(at index: Int, section: SidebarSection) {
-        delegate?.didSelectChat(at: index, section: section)
+    func didSelectChat(at index: Int) {
+        delegate?.didSelectChat(at: index)
     }
     
-    func deleteChat(at index: Int, section: SidebarSection) {
-        delegate?.deleteChat(at: index, section: section)
+    func deleteChat(at index: Int) {
+        delegate?.deleteChat(at: index)
     }
 }
 
@@ -112,8 +112,8 @@ extension SidebarViewController: ContainerSidebarProtocol {
         sidebarTableViewController.reloadCells()
     }
     
-    func updateChat(at index: Int, section: SidebarSection) {
-        sidebarTableViewController.updateCell(at: index, in: section)
+    func updateChat(at index: Int) {
+        sidebarTableViewController.updateCell(at: index)
     }
 }
 

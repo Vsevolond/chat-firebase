@@ -1,15 +1,11 @@
 import UIKit
 
-enum SidebarSection: String, CaseIterable {
-    case allChats = "All chats"
-    case savedChats = "Saved chats"
-}
 
 // MARK: - To SidebarViewController
 protocol SidebarTableViewControllerDelegate: AnyObject {
     var allChats: [ChatViewObject] { get }
-    func didSelectChat(at index: Int, section: SidebarSection)
-    func deleteChat(at index: Int, section: SidebarSection)
+    func didSelectChat(at index: Int)
+    func deleteChat(at index: Int)
 }
 
 // MARK: - SidebarTableViewController
@@ -34,46 +30,33 @@ final class SidebarTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch SidebarSection.allCases[section] {
-        case .allChats:
-            return delegate?.allChats.count ?? 0
-        case .savedChats:
-            return 0
-        }
+        return delegate?.allChats.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SidebarTableViewCell", for: indexPath) as? SidebarTableViewCell else {
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SidebarTableViewCell", for: indexPath) as? SidebarTableViewCell,
+            let chat = delegate?.allChats[indexPath.row]
+        else {
             return .init()
         }
         
-        switch SidebarSection.allCases[indexPath.section] {
-        case .allChats:
-            guard let chat = delegate?.allChats[indexPath.row] else {
-                return .init()
-            }
-            
-            cell.configure(with: chat.name, hasNotify: chat.hasUnreadMessages)
-        case .savedChats:
-            return .init()
-        }
+        cell.configure(with: chat.name, hasNotify: chat.hasUnreadMessages)
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        let section = SidebarSection.allCases[indexPath.section]
-        delegate?.didSelectChat(at: indexPath.row, section: section)
+        delegate?.didSelectChat(at: indexPath.row)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return SidebarSection.allCases.count
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return SidebarSection.allCases[section].rawValue
+        return "All chats"
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -89,14 +72,12 @@ final class SidebarTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let section = SidebarSection.allCases[indexPath.section]
-        let style: UIContextualAction.Style = (section == .allChats ? .destructive : .normal)
-        
-        let deleteAction = UIContextualAction(style: style, title: nil) { [weak self] _, _, completion in
+
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] _, _, completion in
             let alertController = UIAlertController(title: "Delete", message: "Are you sure?", preferredStyle: .alert)
 
             let yesAction = UIAlertAction(title: "YES", style: .default) { _ in
-                self?.delegate?.deleteChat(at: indexPath.row, section: section)
+                self?.delegate?.deleteChat(at: indexPath.row)
             }
             let noAction = UIAlertAction(title: "NO", style: .destructive)
 
@@ -119,36 +100,24 @@ extension SidebarTableViewController: SidebarViewControllerProtocol {
         tableView.reloadData()
     }
     
-    func addNewCell(at index: Int, in section: SidebarSection) {
-        guard let indexOfSection = SidebarSection.allCases.firstIndex(of: section) else {
-            return
-        }
-        
-        let indexPath = IndexPath(row: index, section: indexOfSection)
+    func addNewCell(at index: Int) {
+        let indexPath = IndexPath(row: index, section: 0)
         
         tableView.beginUpdates()
         tableView.insertRows(at: [indexPath], with: .automatic)
         tableView.endUpdates()
     }
     
-    func deleteCell(at index: Int, in section: SidebarSection) {
-        guard let indexOfSection = SidebarSection.allCases.firstIndex(of: section) else {
-            return
-        }
-        
-        let indexPath = IndexPath(row: index, section: indexOfSection)
+    func deleteCell(at index: Int) {
+        let indexPath = IndexPath(row: index, section: 0)
         
         tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .automatic)
         tableView.endUpdates()
     }
     
-    func updateCell(at index: Int, in section: SidebarSection) {
-        guard let indexOfSection = SidebarSection.allCases.firstIndex(of: section) else {
-            return
-        }
-        
-        let indexPath = IndexPath(row: index, section: indexOfSection)
+    func updateCell(at index: Int) {
+        let indexPath = IndexPath(row: index, section: 0)
         
         tableView.reloadRows(at: [indexPath], with: .none)
     }
